@@ -83,7 +83,7 @@ const Navbar = () => {
                 </motion.div>
 
                 {/* Actions Section */}
-                <div className="flex items-center gap-4 md:gap-6 relative z-10">
+                <div className="flex items-center gap-4 md:gap-6 relative z-[9999px]">
                     {/* Credits Button */}
                     <div className="relative">
                         <motion.button
