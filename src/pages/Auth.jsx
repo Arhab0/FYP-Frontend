@@ -16,8 +16,11 @@ import {
 import {auth,googleProvider} from "../utils/firebase"
 import { signInWithPopup } from 'firebase/auth'
 import axios from "axios"
+import { useDispatch } from 'react-redux'
+import { setUserData } from '../redux/userSlice'
 
 const Auth = () => {
+  const dispatch = useDispatch()
   const [isLogin, setIsLogin] = useState(true)
   const [showPassword, setShowPassword] = useState(false)
   const [formData, setFormData] = useState({
@@ -51,9 +54,12 @@ const Auth = () => {
       const result = await axios.post("http://localhost:8000/api/auth/google",
         {name,email},{withCredentials:true}
       )
-      console.log(result.data)
+      // console.log(result.data)
+      dispatch(setUserData(result.data.user))
+      
     } catch (error) {
       console.error(error);
+      dispatch(setUserData(null))
     }
   };
 
