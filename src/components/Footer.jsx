@@ -1,9 +1,11 @@
 import React from 'react'
 import { BsRobot, BsHeart, BsStars } from 'react-icons/bs'
 import { motion } from 'motion/react'
+import { useNavigate } from 'react-router-dom'
 
 const Footer = () => {
     const currentYear = new Date().getFullYear()
+    const navigate = useNavigate();
 
     return (
         <footer className='relative bg-gradient-to-br from-gray-50 via-white to-purple-50/50'>
@@ -34,7 +36,8 @@ const Footer = () => {
                             {/* Logo */}
                             <motion.div 
                                 whileHover={{ scale: 1.05, rotate: 5 }}
-                                className='inline-flex items-center gap-3 mb-6'
+                                onClick={()=>navigate("/")}
+                                className='inline-flex items-center gap-3 mb-6 hover:cursor-pointer'
                             >
                                 <motion.div 
                                     whileHover={{ rotate: 360 }}
