@@ -59,6 +59,7 @@ const Navbar = () => {
                 {/* Logo Section */}
                 <motion.div
                     whileHover={{ scale: 1.02 }}
+                    onClick={()=>navigate("/")}
                     className='flex items-center gap-3 cursor-pointer relative z-10'
                 >
                     <motion.div
