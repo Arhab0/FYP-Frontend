@@ -7,6 +7,8 @@ import { motion } from "motion/react"
 import axios from 'axios'
 import { BsArrowRight } from 'react-icons/bs'
 import { useNavigate } from 'react-router-dom'
+import { setInterviewData } from "../redux/interviewSlice.js"
+import { useDispatch } from 'react-redux'
 
 const Step2Interview = ({ interviewData }) => {
 
@@ -60,7 +62,7 @@ const Step2Interview = ({ interviewData }) => {
   }, []);
 
 
-
+  const dispatch = useDispatch()
   const { interviewId, questions, userName } = interviewData
   const [isIntroPhase, setIsIntroPhase] = useState(true);
 
@@ -320,6 +322,7 @@ const Step2Interview = ({ interviewData }) => {
         interviewId
       }, { withCredentials: true })
 
+      dispatch(setInterviewData(null))
       navigate("/report/" + interviewId)
     } catch (error) {
       console.log(error);
