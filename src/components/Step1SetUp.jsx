@@ -8,15 +8,20 @@ import { BsStars, BsLightningCharge, BsArrowRight } from 'react-icons/bs'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { setUserData } from "../redux/userSlice"
+import { setInterviewData } from '../redux/interviewSlice'
+import { useNavigate } from 'react-router-dom'
+
 
 const Step1SetUp = ({ onStart }) => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-}, []);
+  }, []);
 
 
   const { userData } = useSelector((state) => state.user)
+  const {interviewData} = useSelector((state)=>state.interview)
+  const navigate = useNavigate();
   const dispatch = useDispatch()
   const [role, setRole] = useState("")
   const [experience, setExperience] = useState("")
@@ -66,6 +71,18 @@ const Step1SetUp = ({ onStart }) => {
       setProjects(result.data.projects || [])
       setSkills(result.data.skills || [])
       setResumeText(result.data.resumeText || "")
+
+      // dispatch(setInterviewRoleData({ ...interviewRoleData, credits: result.data.creditsLeft }))
+      dispatch(setInterviewData({
+        ...interviewData,
+        role: result.data.role,
+        experience: result.data.experience,
+        project: result.data.projects,
+        skill: result.data.skills,
+        resumeText: result.data.resumeText,
+        mode: mode
+      }))
+
       setAnalysisDone(true);
       setAnalyzing(false)
 
@@ -87,20 +104,20 @@ const Step1SetUp = ({ onStart }) => {
     if (!role || !experience) return;
     setLoading(true);
     try {
-      const result = await axios.post("http://localhost:8000/api/interview/generate-questions",
-        {
-          role, experience, mode, resumeText, projects, skills
-        },
-        {
-          withCredentials: true
-        })
+      // const result = await axios.post("http://localhost:8000/api/interview/generate-questions",
+      //   {
+      //     role, experience, mode, resumeText, projects, skills
+      //   },
+      //   {
+      //     withCredentials: true
+      //   })
 
-      if (userData) {
-        dispatch(setUserData({ ...userData, credits: result.data.creditsLeft }))
-      }
-
+      // if (userData) {
+      //   dispatch(setUserData({ ...userData, credits: result.data.creditsLeft }))
+      // }
       setLoading(false);
-      onStart(result.data);
+      navigate("/startInterview")
+      // onStart(result.data);
     } catch (error) {
       setLoading(false);
       console.log(error);

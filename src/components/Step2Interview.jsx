@@ -6,12 +6,60 @@ import { FaMicrophone, FaMicrophoneSlash } from 'react-icons/fa'
 import { motion } from "motion/react"
 import axios from 'axios'
 import { BsArrowRight } from 'react-icons/bs'
+import { useNavigate } from 'react-router-dom'
 
-const Step2Interview = ({ interviewData, onFinish }) => {
+const Step2Interview = ({ interviewData }) => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-}, []);
+  }, []);
+
+  useEffect(() => {
+    window.history.pushState(null, "", window.location.href);
+
+    const handlePopState = () => {
+      window.history.pushState(null, "", window.location.href);
+    };
+
+    window.addEventListener("popstate", handlePopState);
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      e.preventDefault();
+      e.returnValue = "";
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (
+        e.key === "F5" ||
+        (e.ctrlKey && e.key.toLowerCase() === "r") ||
+        (e.ctrlKey && e.key.toLowerCase() === "w")
+      ) {
+        e.preventDefault();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
+
 
   const { interviewId, questions, userName } = interviewData
   const [isIntroPhase, setIsIntroPhase] = useState(true);
@@ -34,6 +82,8 @@ const Step2Interview = ({ interviewData, onFinish }) => {
 
   const videoRef = useRef(null);
   const currentQuestion = questions[currentIndex]
+
+  const navigate = useNavigate()
 
   useEffect(() => {
 
@@ -270,7 +320,7 @@ const Step2Interview = ({ interviewData, onFinish }) => {
         interviewId
       }, { withCredentials: true })
 
-      onFinish(result.data)
+      navigate("/report/" + interviewId)
     } catch (error) {
       console.log(error);
     }
@@ -411,13 +461,13 @@ const Step2Interview = ({ interviewData, onFinish }) => {
                 <button
                   className='w-full bg-gradient-to-r from-emerald-600 to-teal-500 text-white py-3 rounded-xl shadow-md hover:opacity-90 transition flex items-center justify-center gap-4'
                 >
-                  Next Question <BsArrowRight size={18} />
+                  {currentIndex + 1 == questions.length ? ("Finish Interview") : (<>Next Question <BsArrowRight size={18} /></>)}
                 </button>
               </motion.div>
             )}
         </div>
       </div>
-    </div>
+    </div >
   )
 }
 

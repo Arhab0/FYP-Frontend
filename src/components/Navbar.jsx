@@ -10,6 +10,7 @@ import axios from 'axios'
 import { setUserData } from '../redux/userSlice'
 import AuthModel from './AuthModel'
 import Cookies from "js-cookie";
+import { setInterviewData } from '../redux/interviewSlice'
 
 const Navbar = () => {
     const { userData } = useSelector((state) => state.user)
@@ -30,6 +31,7 @@ const Navbar = () => {
         );
 
             dispatch(setUserData(null))
+            dispatch(setInterviewData(null))
             setshowCreditPopup(false)
             setshowUserPopup(false)
             navigate("/")
