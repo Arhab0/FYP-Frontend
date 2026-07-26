@@ -229,7 +229,6 @@ const Step2Interview = ({ interviewData, onFinish }) => {
         timeTaken: currentQuestion.timeLimit - timeLeft
       }, { withCredentials: true })
 
-      console.log(result.data)
       setFeedback(result.data.feedback);
       speakText(result.data.feedback);
       setIsSubmitting(false);
@@ -271,7 +270,6 @@ const Step2Interview = ({ interviewData, onFinish }) => {
         interviewId
       }, { withCredentials: true })
 
-      console.log(result.data)
       onFinish(result.data)
     } catch (error) {
       console.log(error);

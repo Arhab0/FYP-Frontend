@@ -18,7 +18,6 @@ const InterviewReport = () => {
       try {
         const result = await axios.get(`http://localhost:8000/api/interview/get-interview-report/${id}`, { withCredentials: true })
         setReport(result.data)
-        console.log(result.data)
       } catch (error) {
         console.log(error)
       } finally {

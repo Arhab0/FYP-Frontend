@@ -27,7 +27,6 @@ const InterviewHistory = () => {
             try {
                 const result = await axios.get("http://localhost:8000/api/interview/get-interviews", { withCredentials: true })
                 setInterviews(result.data)
-                console.log(result.data)
                 setLoading(false)
             } catch (error) {
                 console.log(error);

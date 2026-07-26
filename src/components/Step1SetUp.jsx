@@ -60,7 +60,6 @@ const Step1SetUp = ({ onStart }) => {
 
     try {
       const result = await axios.post("http://localhost:8000/api/interview/resume", formdata, { withCredentials: true })
-      console.log(result.data)
 
       setRole(result.data.role || "")
       setExperience(result.data.experience || "")
@@ -95,7 +94,6 @@ const Step1SetUp = ({ onStart }) => {
         {
           withCredentials: true
         })
-      console.log(result.data)
 
       if (userData) {
         dispatch(setUserData({ ...userData, credits: result.data.creditsLeft }))
